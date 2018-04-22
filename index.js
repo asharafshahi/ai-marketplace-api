@@ -1,4 +1,6 @@
 const axios = require('axios');
+const fs = require('fs-extra');
+const FormData = require('form-data');
 
 class AiTransactions {
     constructor(endpointUrl, apiKey) {
