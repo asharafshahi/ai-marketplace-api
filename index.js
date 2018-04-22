@@ -54,7 +54,7 @@ class AiTransactions {
         let url = `${this.endpointUrl}/${transactionId}/results`;
         const body = {
           serviceKey,
-          resultKey: 'test'
+          resultKey
         };
         const response = await axios.post(url, body);
         const resultId = response.data.result.id;
