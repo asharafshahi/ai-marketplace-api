@@ -1,0 +1,12 @@
+{
+  "name": "@nuance/ai-marketplace-api",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Node library for interacting with Nuance AI Marketplace API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Arman Sharafshahi",
+  "license": "MIT"
+}
