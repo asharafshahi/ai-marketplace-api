@@ -5,7 +5,7 @@ class AiTransactions {
       this.endpointUrl = endpointUrl;
       this.apiKey = apiKey; 
       axios.defaults.headers.common['Content-Type'] = 'application/json';
-      axios.defaults.headers.common['Ocp-Apim-Subscription-Key'] = apikey;
+      axios.defaults.headers.common['Ocp-Apim-Subscription-Key'] = apiKey;
     }
   
     async createTransaction({ serviceId, studyUid, accessionNumber }) {
@@ -42,6 +42,10 @@ class AiTransactions {
             console.error(err);
             throw err;
         }
+    }
+ 
+    async findTransaction (query) {
+        // TODO
     }
 
     async uploadResult (transactionId, serviceKey, resultKey, data) {
