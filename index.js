@@ -65,7 +65,7 @@ class AiTransactions {
           }
         };
         fs.writeFileSync('result.json', data, 'utf8');
-        form = new FormData();
+        const form = new FormData();
         form.append('documentType', 'json');
         form.append('name', 'AI result');
         form.append('file', fs.createReadStream('result.json'));
