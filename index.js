@@ -50,12 +50,7 @@ class AiTransactions {
         // TODO
     }
 
-    async uploadResult (transactionId, serviceKey, resultKey, data) {
-      fs.writeFileSync('result.json', data, 'utf8');
-      uploadResultFile(transactionId, serviceKey, resultKey, 'result.json');  
-    };
-   
-    async uploadResultFile (transacionId, serviceKey, resultKey, filename) {
+    async createResult (transactionId, serviceKey, resultKey) {
       let url = `${this.endpointUrl}/${transactionId}/results`;
       const body = {
         serviceKey,
@@ -63,22 +58,32 @@ class AiTransactions {
       };
       const response = await axios.post(url, body);
       const resultId = response.data.result.id;
+      return resultId;
+    }
+   
+    async uploadResultFiles (resultId, filenames) {
       url = `${url}/${resultId}/documents`;
       const config = {
         headers: {
           'content-type': 'multipart/form-data'
         }
       };
-      const form = new FormData();
-      form.append('documentType', 'json');
-      form.append('name', 'AI result');
-      form.append('file', fs.createReadStream(filename));
-      console.log(url);
-      form.submit(url, (err, res) => {
-        if (!err) console.log('submission success');
-        fs.unlinkSync('result.json');
+      filenames.forEach(filename => {
+        const form = new FormData();
+        form.append('documentType', 'json');
+        form.append('name', 'AI result');
+        form.append('file', fs.createReadStream(filename));
+        form.submit(url, (err, res) => {
+          if (!err) console.log('submission success');
+        });
       });
     }
+
+    async uploadResultData (resultId, data) {
+      fs.writeFileSync('result.json', data, 'utf8');
+      await uploadResultFiles(resultId, ['result.json']);  
+      fs.unlinkSync('result.json');
+    };
 }
   
 module.exports = AiTransactions;

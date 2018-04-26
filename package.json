@@ -5,8 +5,16 @@
   "description": "Node library for interacting with Nuance AI Marketplace API",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "Arman Sharafshahi",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^22.4.3"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "form-data": "^2.3.2",
+    "fs-extra": "^5.0.0"
+  }
 }
