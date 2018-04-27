@@ -51,18 +51,18 @@ class AiTransactions {
     }
 
     async createResult (transactionId, serviceKey, resultKey) {
-      let url = `${this.endpointUrl}/${transactionId}/results`;
+      const url = `${this.endpointUrl}/${transactionId}/results`;
       const body = {
         serviceKey,
         resultKey
       };
       const response = await axios.post(url, body);
       const resultId = response.data.result.id;
-      return resultId;
+      return {transasctionId, resultId};
     }
    
-    async uploadResultFiles (resultId, filenames) {
-      url = `${url}/${resultId}/documents`;
+    async uploadResultFiles (transactionId, resultId, filenames) {
+      const url = `${this.endpointUrl}/${transactionId}/results/${resultId}/documents`;
       const config = {
         headers: {
           'content-type': 'multipart/form-data'
@@ -79,9 +79,9 @@ class AiTransactions {
       });
     }
 
-    async uploadResultData (resultId, data) {
+    async uploadResultData (transactionId, resultId, data) {
       fs.writeFileSync('result.json', data, 'utf8');
-      await uploadResultFiles(resultId, ['result.json']);  
+      await this.uploadResultFiles(transactionId, resultId, ['result.json']);  
       fs.unlinkSync('result.json');
     };
 }
