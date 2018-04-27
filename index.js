@@ -58,7 +58,7 @@ class AiTransactions {
       };
       const response = await axios.post(url, body);
       const resultId = response.data.result.id;
-      return {transasctionId, resultId};
+      return resultId;
     }
    
     async uploadResultFiles (transactionId, resultId, filenames) {
