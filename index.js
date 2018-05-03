@@ -12,53 +12,61 @@ class AiTransactions {
   
     async createTransaction({ serviceId, studyUid, accessionNumber }) {
       const payload = {
-        serviceId, accessionNumber,
+        service: {
+          id: serviceId
+        },
+        accessionNumber,
         studyUID: studyUid,
         priority: 1,
-        status: 'initiated'
+        status: 'ANALYSIS_PENDING'
+      };
+
+      try {
+        const { data } = await axios.post(this.endpoint_url, payload);
+        return {
+          serviceId,
+          transactionId: data.id,
+        };
+      } catch(err) {
+        console.error(err);
+        throw err;
       }
-      return new Promise(async (resolve, reject) => {
-        try {
-           const { data } = await axios.post(this.endpoint_url, payload);
-           resolve({
-             serviceId,
-             transactionId: data.transactionId,
-           });
-        } catch(err) {
-          console.error(err.message);
-          reject(err)
-        }
-      });
     }
 
     async updateTransaction(transactionId, payload) {
-        let url = `${this.endpointUrl}/${transactionId}`;
-        try {
-            const resp = await axios.put(url, payload);
-            if (resp.status === 200) {
-                return resp.data;
-            } else {
-                throw Error('Update failed');
-            }
-        } catch (err) {
-            console.error(err);
-            throw err;
-        }
+      let url = `${this.endpointUrl}/${transactionId}`;
+      try {
+          const resp = await axios.put(url, payload);
+          if (resp.status === 200) {
+              return resp.data;
+          } else {
+              throw Error('Update failed');
+          }
+      } catch (err) {
+          console.error(err);
+          throw err;
+      }
     }
  
     async findTransaction (query) {
         // TODO
     }
 
-    async createResult (transactionId, serviceKey, resultKey) {
+    async createResult (transactionId, serviceKey, resultKey, resultType) {
       const url = `${this.endpointUrl}/${transactionId}/results`;
       const body = {
         serviceKey,
-        resultKey
+        resultKey,
+        resultType,
       };
-      const response = await axios.post(url, body);
-      const resultId = response.data.result.id;
-      return resultId;
+      try {
+        const response = await axios.post(url, body);
+        const resultId = response.data.id;
+        return resultId;
+      } catch (err) {
+        console.log(err);
+        throw err;
+      }
     }
    
     async uploadResultFiles (transactionId, resultId, filenames) {

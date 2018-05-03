@@ -2,7 +2,7 @@
   "name": "@nuance/ai-marketplace-api",
   "private": true,
   "version": "1.0.0",
-  "description": "Node library for interacting with Nuance AI Marketplace API",
+  "description": "Node library for interacting with Nuance AI Marketplace Transaction API",
   "main": "index.js",
   "scripts": {
     "test": "jest"
@@ -10,6 +10,7 @@
   "author": "Arman Sharafshahi",
   "license": "MIT",
   "devDependencies": {
+    "eslint": "^4.19.1",
     "jest": "^22.4.3"
   },
   "dependencies": {
