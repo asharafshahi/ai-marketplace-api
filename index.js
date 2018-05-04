@@ -87,21 +87,11 @@ class AiTransactions {
           'Ocp-Apim-Subscription-Key': this.apiKey
         }, form.getHeaders());
         try {
-          const { data } = await axios.post(url, form, { headers });
-          console.log(JSON.parse(data));
+          await axios.post(url, form, { headers });
         } catch (err) {
           console.log(err);
           throw err;
         }
-        /*
-        form.submit({
-          host: this.endpointUrl,
-          path: `/${transactionId}/results/${resultId}/documents`,
-          headers
-        }, (err, res) => {
-          if (!err) console.log(`submission success.  ${res.statusCode}`);
-        });
-        */
       });
     }
 
