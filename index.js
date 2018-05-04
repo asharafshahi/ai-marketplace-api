@@ -47,6 +47,10 @@ class AiTransactions {
           throw err;
       }
     }
+
+    async markTransactionStatusComplete(transactionId) {
+      await this.updateTransaction(transactionId, { status: 'ANALYSIS_COMPLETE' });
+    }
  
     async findTransaction (query) {
         // TODO
@@ -91,7 +95,7 @@ class AiTransactions {
       fs.writeFileSync('result.json', data, 'utf8');
       await this.uploadResultFiles(transactionId, resultId, ['result.json']);  
       fs.unlinkSync('result.json');
-    };
+    }
 }
   
 module.exports = AiTransactions;
