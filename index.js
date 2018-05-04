@@ -74,19 +74,24 @@ class AiTransactions {
     }
    
     async uploadResultFiles (transactionId, resultId, filenames) {
-      const url = `${this.endpointUrl}/${transactionId}/results/${resultId}/documents`;
-      const config = {
-        headers: {
-          'content-type': 'multipart/form-data'
-        }
-      };
       filenames.forEach(filename => {
         const form = new FormData();
         form.append('documentType', 'json');
         form.append('name', 'AI result');
         form.append('file', fs.createReadStream(filename));
-        form.submit(url, (err, res) => {
-          if (!err) console.log('submission success');
+
+        const headers = {
+          'content-type': 'multipart/form-data',
+          'Accept': 'application/json',
+          'Ocp-Apim-Subscription-Key': this.apiKey
+        };
+
+        form.submit({
+          host: this.endpointUrl,
+          path: `/${transactionId}/results/${resultId}/documents`,
+          headers
+        }, (err, res) => {
+          if (!err) console.log(`submission success.  ${res.statusCode}`);
         });
       });
     }
