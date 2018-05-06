@@ -22,7 +22,7 @@ class AiTransactions {
       };
 
       try {
-        const { data } = await axios.post(this.endpoint_url, payload);
+        const { data } = await axios.post(this.endpointUrl, payload);
         return {
           serviceId,
           transactionId: data.id,
