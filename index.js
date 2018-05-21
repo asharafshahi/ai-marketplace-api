@@ -78,7 +78,7 @@ class AiTransactions {
       filenames.forEach(async filename => {
         const form = new FormData();
         form.append('documentType', 'json');
-        form.append('name', 'AI result');
+        form.append('name', filename.split('/').slice(-1));
         form.append('file', fs.createReadStream(filename));
 
         const headers = Object.assign({
